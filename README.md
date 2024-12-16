@@ -1,18 +1,23 @@
-# Bureau-d-avocat
+# Bureau d'avocat
 
 ## Contexte du projet 
-``` Le bureau d'avocats : ``` est une entreprise spécialisée dans le conseil juridique. Pour améliorer leur efficacité et leur productivité, ils ont décidé de mettre en place un logiciel de gestion de leur activité.
+``` Le bureau d'avocats (Côté admin) : ``` est une entreprise spécialisée dans le conseil juridique. Pour améliorer leur efficacité et leur productivité, ils ont décidé de mettre en place un logiciel de gestion de leur activité.
 
 ## Exigences fonctionnelles et techniques
 ##### •	Gestion des dossiers clients 
 ##### •	Gestion des factures 
 ##### •	Gestion des dépenses 
-##### •	Gestion des calendriers 
+##### •	Gestion des calendriers
+##### •	Gestion du rendez-vous
 ##### •	Gestion des tâches 
-##### •	Gestion des contacts 
 ##### •	Fonctionnalités de sécurité
 
-
+## Technologie du web
+##### •	HTML 
+##### •	CSS
+##### •	Bootstrap
+##### •	JavaScript
+##### •	Laravel ( framework de PHP )
 
 # Interface de Menu 
 #### •	Accueil
