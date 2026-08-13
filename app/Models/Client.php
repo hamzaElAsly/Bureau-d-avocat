@@ -13,7 +13,8 @@ class Client extends Model
                             'nomClient','prenomClient','tel1','tel2',
                             'adressClient','emailClient','imageClient'
                         ];
-    public function dossier() {
-        return $this->belongsTo(Dossier::class, 'idDossier');
+
+    public function dossiers() {
+        return $this->hasMany(Dossier::class, 'idCl', 'idClient');
     }
 }

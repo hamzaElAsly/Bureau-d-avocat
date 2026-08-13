@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::create('clients', function (Blueprint $table) {
-            $table->unsignedBigInteger('idClient')->primary()->autoIncrement();
+            $table->bigIncrements('idClient');
             $table->string('nomClient');
             $table->string('prenomClient');
             $table->string('emailClient');

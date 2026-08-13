@@ -2,10 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Avocat;
-use App\Models\Bureau;
-use App\Models\Client;
-use App\Models\Dossier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -13,19 +9,13 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CasFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'idCas' => $this->faker->unique()->randomNumber(),
-            'cas_idAvocat' => Avocat::factory(),
-            'cas_idClient' => Client::factory(),
-            'cas_idDossier' => Dossier::factory(),
-            'idBr' => Bureau::factory(),
+            'idCas' => $this->faker->unique()->randomNumber(7),
+            'listeCas' => $this->faker->randomElement([
+                'Civil', 'Pénal', 'Commercial', 'Familial', 'Social', 'Immobilier', 'Administratif',
+            ]),
         ];
     }
 }

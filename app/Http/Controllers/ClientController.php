@@ -2,52 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-
-    public function count(){
-        $countCl= Client::count();
-        return(view('welcome',compact('countCl')));
-    }
-    public function listerClient()
+    public function count()
     {
-        $dbClient = Client::all();
-        return(view('clients.clients',compact('dbClient')));
+        $countCl = Client::count();
+        return view('welcome', compact('countCl'));
+    }
+
+    public function listerClient(Request $request)
+    {
+        $query = Client::query();
+
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nomClient', 'like', "%{$search}%")
+                  ->orWhere('prenomClient', 'like', "%{$search}%")
+                  ->orWhere('emailClient', 'like', "%{$search}%")
+                  ->orWhere('tel1', 'like', "%{$search}%")
+                  ->orWhere('tel2', 'like', "%{$search}%");
+            });
+        }
+
+        $dbClient = $query->orderByDesc('idClient')->paginate(10)->withQueryString();
+
+        return view('clients.clients', compact('dbClient'));
     }
 
     public function create()
     {
-        return(view('clients.addClient'));
+        return view('clients.addClient');
     }
 
-    public function ajouterClient(Request $req)
+    public function ajouterClient(StoreClientRequest $req)
     {
-        $cl= new Client();
-        $cl->prenomClient = $req->input('prenom');
-        $cl->nomClient = $req->input('nom');
-        $cl->tel1 = $req->input('t1');
-        $cl->tel2 = $req->input('t2');
-        $cl->adressClient = $req->input('adrs');
-        $cl->emailClient = $req->input('mail');
-        $cl->imageClient = $req->input('photo');
-        $cl->save();
-        return redirect()->route('clients.clients');
+        Client::create([
+            'prenomClient' => $req->input('prenom'),
+            'nomClient' => $req->input('nom'),
+            'tel1' => $req->input('t1'),
+            'tel2' => $req->input('t2'),
+            'adressClient' => $req->input('adrs'),
+            'emailClient' => $req->input('mail'),
+            'imageClient' => $req->input('photo'),
+        ]);
+
+        return redirect()->route('clients')->with('success', 'Client ajouté avec succès.');
     }
 
-    public function showClient(string $id){
-        $client=Client::find($id);
-        return view('clients.infoCl',compact('client'));
+    public function showClient(string $id)
+    {
+        $client = Client::with('dossiers')->findOrFail($id);
+        return view('clients.infoCl', compact('client'));
     }
-    
-    
-    public function updateClient(string $id){
-        return view('clients.updateCl',['upCl'=>Client::findOrFail($id)])
-    ;}
-    public function update(Request $req, string $id){
-        $cl= Client::find($id);
+
+    public function updateClient(string $id)
+    {
+        return view('clients.updateCl', ['upCl' => Client::findOrFail($id)]);
+    }
+
+    public function update(UpdateClientRequest $req, string $id)
+    {
+        $cl = Client::findOrFail($id);
         $cl->prenomClient = $req->input('prenom');
         $cl->nomClient = $req->input('nom');
         $cl->tel1 = $req->input('t1');
@@ -55,11 +75,15 @@ class ClientController extends Controller
         $cl->adressClient = $req->input('adrs');
         $cl->emailClient = $req->input('mail');
         $cl->save();
-        return redirect()->route('clients.clients');
+
+        return redirect()->route('clients')->with('success', 'Client modifié avec succès.');
     }
 
     public function destroy(string $id)
     {
-        //
+        $cl = Client::findOrFail($id);
+        $cl->delete();
+
+        return redirect()->route('clients')->with('success', 'Client supprimé avec succès.');
     }
 }

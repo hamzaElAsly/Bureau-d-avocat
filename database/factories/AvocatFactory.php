@@ -2,9 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Bureau;
-use App\Models\Cas;
-use App\Models\Client;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,23 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AvocatFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            'idAvocat' => $this->faker->unique()->randomNumber(),
+            'idAvocat' => $this->faker->unique()->randomNumber(7),
             'nomAvocat' => $this->faker->lastName(),
             'prenomAvocat' => $this->faker->firstName(),
-            'telAvocat' => $this->faker->phoneNumber(),
-            'emailAvocat' => $this->faker->safeEmail(),
+            'telAvocat' => $this->faker->numerify('06########'),
+            'emailAvocat' => $this->faker->unique()->safeEmail(),
             'passAvocat' => $this->faker->password(),
-            'idCl' => Client::factory(),
-            'idCa' => Cas::factory(),
-            'idBr' => Bureau::factory(),
+            'specialiste' => $this->faker->word(),
         ];
     }
 }

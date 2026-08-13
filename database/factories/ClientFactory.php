@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Audience;
-use App\Models\Bureau;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,14 +17,13 @@ class ClientFactory extends Factory
     public function definition(): array
     {
         return [
-            'idClient' => $this->faker->unique()->randomNumber(),
             'nomClient' => $this->faker->lastName(),
             'prenomClient' => $this->faker->firstName(),
-            'tel1' => $this->faker->phoneNumber(),
-            'tel2' => $this->faker->phoneNumber(),
-            'emailClient' => $this->faker->safeEmail(),
-            'idAud' => Audience::factory(),
-            'idBr' => Bureau::factory(),
+            'tel1' => $this->faker->numerify('06########'),
+            'tel2' => $this->faker->numerify('06########'),
+            'emailClient' => $this->faker->unique()->safeEmail(),
+            'adressClient' => $this->faker->address(),
+            'imageClient' => null,
         ];
     }
 }

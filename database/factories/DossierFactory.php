@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Avocat;
+use App\Models\Client;
 use App\Models\Cas;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,12 +21,19 @@ class DossierFactory extends Factory
     public function definition(): array
     {
         return [
-            'idDossier' => $this->faker->unique()->randomNumber(),
-            'nomDossier' => $this->faker->word(),
-            'contenu' => $this->faker->paragraph(),
-            'dateDossier' => $this->faker->date(),
-            'prix' => $this->faker->randomFloat(2, 100, 1000),
+            'nomDossier' => $this->faker->unique()->bothify('DOS-####'),
+            'titre' => $this->faker->sentence(4),
+            'numero_dossier' => $this->faker->unique()->bothify('DOS-####'),
+            'idAv' => Avocat::factory(),
+            'assigned_user_id' => User::factory(),
+            'idCl' => Client::factory(),
             'idCa' => Cas::factory(),
+            'dateDossier' => $this->faker->date(),
+            'date_fermeture' => null,
+            'etat' => 'en cours',
+            'statut' => $this->faker->randomElement(\App\Models\Dossier::STATUTS),
+            'priorite' => $this->faker->randomElement(\App\Models\Dossier::PRIORITES),
+            'description' => $this->faker->paragraph(),
         ];
     }
 }
