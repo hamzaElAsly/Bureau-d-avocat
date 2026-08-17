@@ -25,6 +25,10 @@ class DossierController extends Controller
                   ->orWhereHas('client', function ($cq) use ($search) {
                       $cq->where('nomClient', 'like', "%{$search}%")
                         ->orWhere('prenomClient', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('assignedUser', function ($uq) use ($search) {
+                      $uq->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
                   });
             });
         }
@@ -37,12 +41,17 @@ class DossierController extends Controller
             $query->where('priorite', $priorite);
         }
 
+        if ($responsable = $request->input('responsable')) {
+            $query->where('assigned_user_id', $responsable);
+        }
+
         $dossiers = $query->orderByDesc('idDossier')->paginate(10)->withQueryString();
 
         return view('dossiers.index', [
             'dossiers' => $dossiers,
             'statuts' => Dossier::STATUTS,
             'priorites' => Dossier::PRIORITES,
+            'users' => User::orderBy('name')->get(),
         ]);
     }
 
@@ -104,7 +113,7 @@ class DossierController extends Controller
         return redirect()->route('dossiers')->with('success', 'Dossier supprimé avec succès.');
     }
 
-    private function mapInputs($request): array
+    private function mapInputs(StoreDossierRequest|UpdateDossierRequest $request): array
     {
         return [
             'nomDossier' => $request->input('nomDossier'),
@@ -112,7 +121,7 @@ class DossierController extends Controller
             'numero_dossier' => $request->input('numero_dossier'),
             'idCl' => $request->input('idCl'),
             'idAv' => $request->input('idAv') ?: null,
-            'assigned_user_id' => $request->input('assigned_user_id') ?: null,
+            'assigned_user_id' => $request->input('assigned_user_id') ?: $request->user()->id,
             'idCa' => $request->input('idCa') ?: null,
             'dateDossier' => $request->input('dateDossier'),
             'date_fermeture' => $request->input('date_fermeture') ?: null,

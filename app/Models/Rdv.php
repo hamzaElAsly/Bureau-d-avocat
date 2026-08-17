@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Rdv extends Model
 {
     use HasFactory;
-    protected $primaryKey="numRDV";
+    protected $primaryKey="idRDV";
 }

@@ -9,8 +9,10 @@ class Avocat extends Model
 {
     use HasFactory;
     protected $primaryKey='idAvocat';
-    
-    // public function dossier(){
-    //     return $this->hasMany(Dossier::class,'avocat_id','idAvocat');
-    // }
+    protected $fillable = ['idAvocat', 'nomAvocat', 'prenomAvocat', 'telAvocat', 'emailAvocat', 'passAvocat', 'specialiste', 'imageAvocat'];
+
+    public function dossiers()
+    {
+        return $this->hasMany(Dossier::class, 'idAv', 'idAvocat');
+    }
 }

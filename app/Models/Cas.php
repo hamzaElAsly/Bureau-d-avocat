@@ -9,4 +9,10 @@ class Cas extends Model
 {
     use HasFactory;
     protected $primaryKey='idCas';
+    protected $fillable = ['idCas', 'listeCas'];
+
+    public function dossiers()
+    {
+        return $this->hasMany(Dossier::class, 'idCa', 'idCas');
+    }
 }

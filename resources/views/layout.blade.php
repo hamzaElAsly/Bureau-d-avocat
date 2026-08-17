@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
     <title>@yield('titre')</title>
+    <style>.dnx { display: none !important; }</style>
     <link rel="icon" type="image/x-icon" href="{{asset('img/logoicon.png')}}">
 </head>
 <body>
@@ -28,7 +29,11 @@
             {{-- LOGO --}}
             <div class="d-flex align-items-center ms-4 mb-2">
                     <a href="/"><img class="nav-item nav-link active" src="{{ asset('img/LOGO.png')}}"alt="LOGO.png" style="width: 200px; height: 100px;"></a>
-            </div>
+                <form action="{{ route('logout') }}" method="POST" class="px-3 mt-2">
+                    @csrf
+                    <button type="submit" class="btn btn-link nav-link p-0"><i class="fa fa-power-off me-2"></i>Déconnexion</button>
+                </form>
+            </div> 
             {{-- Sidebar --}}
             <div class="navbar-nav w-100">
                 <a href="{{url('/')}}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Acceuil</a>
@@ -65,7 +70,7 @@
                         <img class="rounded-circle" src="{{asset('img/user.jpg')}}" alt="profil" style="width: 40px; height: 40px;">
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-2">Hamza El Asly</h6>
+                        <h6 class="mb-2">{{ auth()->user()->name }}</h6>
                     </div>
                 </div>
                     <a href="{{route('profil')}}"><button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-id-badge me-2"></i>Mon profile</button></a>

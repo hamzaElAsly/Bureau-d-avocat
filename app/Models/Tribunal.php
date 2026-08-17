@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Tribunal extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'idTribunal';
 }

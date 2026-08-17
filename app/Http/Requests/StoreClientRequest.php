@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Client;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreClientRequest extends FormRequest
 {
@@ -20,7 +22,11 @@ class StoreClientRequest extends FormRequest
             't2' => ['nullable', 'string', 'max:30'],
             'adrs' => ['required', 'string', 'max:255'],
             'mail' => ['required', 'email', 'max:150'],
-            'photo' => ['nullable', 'string', 'max:255'],
+            'photo' => ['nullable', 'image', 'max:2048'],
+            'type_client' => ['required', Rule::in(Client::TYPES)],
+            'identifiant' => ['nullable', 'string', 'max:100'],
+            'notes' => ['nullable', 'string'],
+            'statut' => ['required', Rule::in(Client::STATUTS)],
         ];
     }
 
