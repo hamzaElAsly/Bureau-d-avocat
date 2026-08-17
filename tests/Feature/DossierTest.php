@@ -69,7 +69,7 @@ class DossierTest extends TestCase
         $user = User::factory()->create();
         $dossier = Dossier::factory()->create(['statut' => 'nouveau']);
 
-        $response = $this->actingAs($user)->post(route('dossiers.update', $dossier->idDossier), [
+        $response = $this->actingAs($user)->put(route('dossiers.update', $dossier->idDossier), [
             'nomDossier' => $dossier->nomDossier,
             'titre' => 'Titre modifié',
             'idCl' => $dossier->idCl,

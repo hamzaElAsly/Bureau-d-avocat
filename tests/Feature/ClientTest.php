@@ -33,6 +33,8 @@ class ClientTest extends TestCase
             't2' => '0687654321',
             'adrs' => '12 rue de Paris',
             'mail' => 'jean.dupont@example.com',
+            'type_client' => 'particulier',
+            'statut' => 'actif',
         ]);
 
         $response->assertRedirect(route('clients'));
@@ -49,6 +51,8 @@ class ClientTest extends TestCase
             't1' => '',
             'adrs' => '',
             'mail' => 'invalid-email',
+            'type_client' => 'particulier',
+            'statut' => 'actif',
         ]);
 
         $response->assertSessionHasErrors(['prenom', 'nom', 't1', 'adrs', 'mail']);
@@ -60,13 +64,17 @@ class ClientTest extends TestCase
         $user = User::factory()->create();
         $client = Client::factory()->create();
 
-        $response = $this->actingAs($user)->post(route('updateCl.store', $client->idClient), [
+        $response = $this->actingAs($user)->put(route('updateCl.store', $client->idClient), [
             'prenom' => 'Nouveau',
             'nom' => 'Nom',
             't1' => '0600000000',
             't2' => '0600000001',
             'adrs' => 'Nouvelle adresse',
             'mail' => 'nouveau@example.com',
+            'type_client' => 'entreprise',
+            'identifiant' => 'RC-123',
+            'notes' => 'Client professionnel',
+            'statut' => 'actif',
         ]);
 
         $response->assertRedirect(route('clients'));
@@ -90,8 +98,6 @@ class ClientTest extends TestCase
 
     public function test_unauthenticated_user_cannot_access_clients(): void
     {
-        // Les routes ne sont pas (encore) protégées par middleware auth,
-        // ce test documente l'état actuel. Voir SecurityTest pour l'attente.
-        $this->get(route('clients'))->assertStatus(200);
+        $this->get(route('clients'))->assertRedirect(route('login'));
     }
 }

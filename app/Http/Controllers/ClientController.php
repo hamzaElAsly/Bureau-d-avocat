@@ -48,7 +48,11 @@ class ClientController extends Controller
             'tel2' => $req->input('t2'),
             'adressClient' => $req->input('adrs'),
             'emailClient' => $req->input('mail'),
-            'imageClient' => $req->input('photo'),
+            'imageClient' => $req->file('photo')?->store('clients', 'public'),
+            'type_client' => $req->input('type_client'),
+            'identifiant' => $req->input('identifiant'),
+            'notes' => $req->input('notes'),
+            'statut' => $req->input('statut'),
         ]);
 
         return redirect()->route('clients')->with('success', 'Client ajouté avec succès.');
@@ -74,6 +78,13 @@ class ClientController extends Controller
         $cl->tel2 = $req->input('t2');
         $cl->adressClient = $req->input('adrs');
         $cl->emailClient = $req->input('mail');
+        $cl->type_client = $req->input('type_client');
+        $cl->identifiant = $req->input('identifiant');
+        $cl->notes = $req->input('notes');
+        $cl->statut = $req->input('statut');
+        if ($req->hasFile('photo')) {
+            $cl->imageClient = $req->file('photo')->store('clients', 'public');
+        }
         $cl->save();
 
         return redirect()->route('clients')->with('success', 'Client modifié avec succès.');
@@ -82,6 +93,12 @@ class ClientController extends Controller
     public function destroy(string $id)
     {
         $cl = Client::findOrFail($id);
+
+        if ($cl->dossiers()->exists()) {
+            return redirect()->route('infoCl', $cl->idClient)
+                ->with('error', 'Ce client possède des dossiers et ne peut pas être supprimé.');
+        }
+
         $cl->delete();
 
         return redirect()->route('clients')->with('success', 'Client supprimé avec succès.');

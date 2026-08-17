@@ -5,7 +5,7 @@
     <h1 class="text-center mb-4">Modifier le dossier</h1>
     <div class="bg-light m-2 pb-3 p-4">
         <form action="{{ route('dossiers.update', $dossier->idDossier) }}" method="post">
-            @csrf @method('POST')
+            @csrf @method('PUT')
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">

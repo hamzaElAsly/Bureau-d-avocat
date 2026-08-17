@@ -33,6 +33,14 @@
                 </select>
             </div>
             <div class="col-md-2">
+                <select name="responsable" class="form-select">
+                    <option value="">Tous les responsables</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}" @selected((string) request('responsable') === (string) $user->id)>{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
                 <button type="submit" class="btn btn-info w-100"><i class="fa fa-filter"></i> Filtrer</button>
             </div>
         </form>

@@ -5,7 +5,7 @@
     <div class="mt-2 h-100 d-flex justify-content-center" style="text-align:center">
         <div class="bg-light rounded w-50 h-100 p-4">
             <h2 class="mb-4">Ajouter un client</h2>
-            <form action="{{route('addCl.store')}}" method="post">@csrf
+            <form action="{{route('addCl.store')}}" method="post" enctype="multipart/form-data">@csrf
               @if ($errors->any())
                 <div class="alert alert-danger text-start">
                     <ul class="mb-0">
@@ -32,6 +32,26 @@
               </div>
               <div class="mb-3">
                 <input type="email" name="mail" class="form-control" value="{{ old('mail') }}" placeholder="Email"/>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <select name="type_client" class="form-select">
+                    <option value="particulier" @selected(old('type_client', 'particulier') === 'particulier')>Particulier</option>
+                    <option value="entreprise" @selected(old('type_client') === 'entreprise')>Entreprise</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <select name="statut" class="form-select">
+                    <option value="actif" @selected(old('statut', 'actif') === 'actif')>Actif</option>
+                    <option value="inactif" @selected(old('statut') === 'inactif')>Inactif</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <input type="text" name="identifiant" class="form-control" value="{{ old('identifiant') }}" placeholder="CIN / identifiant (facultatif)"/>
+              </div>
+              <div class="mb-3">
+                <textarea name="notes" class="form-control" rows="3" placeholder="Notes (facultatif)">{{ old('notes') }}</textarea>
               </div>
               <div class="mb-3">
                 <input type="file" name="photo" class="form-control"/>

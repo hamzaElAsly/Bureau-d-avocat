@@ -2,6 +2,9 @@
 @section("titre")Infos de Client @endsection
 @section('content')
 <div class="container mt-5">
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
     <div class="row">
         <!-- Infos client -->
         <div class="col-md-4">
@@ -20,6 +23,16 @@
                 <p class="card-text"><a href="tel:{{$client->tel2}}">{{$client->tel2}}</a></p>
                 <h5 class="card-title">Email</h5>
                 <p class="card-text">{{$client->emailClient}}</p>
+                <h5 class="card-title">Type / statut</h5>
+                <p class="card-text">{{ ucfirst($client->type_client) }} · {{ ucfirst($client->statut) }}</p>
+                @if ($client->identifiant)
+                    <h5 class="card-title">Identifiant</h5>
+                    <p class="card-text">{{ $client->identifiant }}</p>
+                @endif
+                @if ($client->notes)
+                    <h5 class="card-title">Notes</h5>
+                    <p class="card-text">{{ $client->notes }}</p>
+                @endif
                 <a href="{{route('updateCl',$client->idClient)}}">
                     <button class="btn btn-primary">Modifier ses infos</button>
                 </a>

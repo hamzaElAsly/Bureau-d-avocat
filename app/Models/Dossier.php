@@ -17,6 +17,14 @@ class Dossier extends Model {
     public const STATUTS = ['nouveau', 'en_cours', 'en_attente', 'suspendu', 'cloture', 'archive'];
     public const PRIORITES = ['basse', 'normale', 'haute', 'urgente'];
 
+    protected function casts(): array
+    {
+        return [
+            'dateDossier' => 'date',
+            'date_fermeture' => 'date',
+        ];
+    }
+
     public function client() {
         return $this->belongsTo(Client::class, 'idCl', 'idClient');
     }
@@ -31,5 +39,10 @@ class Dossier extends Model {
 
     public function cas() {
         return $this->belongsTo(Cas::class, 'idCa', 'idCas');
+    }
+
+    public function audiences()
+    {
+        return $this->hasMany(Audience::class, 'id_Dossier', 'idDossier');
     }
 }

@@ -51,18 +51,24 @@
                 <div style="float: left" class="col-6 col-sm-4 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <h3 class="d-flex align-items-center ms-3 mb-3">Connexion</h3>
+                        <form method="POST" action="{{ route('login.store') }}">
+                            @csrf
+                            @if ($errors->any())
+                                <div class="alert alert-danger">{{ $errors->first() }}</div>
+                            @endif
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="nom@example.com">
+                            <input type="email" name="email" value="{{ old('email') }}" class="form-control" id="floatingInput" placeholder="nom@example.com" required autofocus>
                             <label for="floatingInput">Email</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="mot de pass">
+                            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="mot de pass" required>
                             <label for="floatingPassword">Mot de pass</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-between ms-3 mb-4">
                             <a href="">Mot de passe oublié</a>
                         </div>
                         <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Connecter</button>
+                        </form>
                         <p class="text-center mb-0">Je n'ai pas de compte? <a href="{{route('signup')}}">Register</a></p>
                     </div>
                 </div>
