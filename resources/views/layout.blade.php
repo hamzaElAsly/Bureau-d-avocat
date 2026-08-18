@@ -43,7 +43,12 @@
                 
                 <span class="nav-link">ACCESSIORES</span>
                 <a href="{{route('addUse')}}" class="nav-item nav-link"><i class="fa fa-user me-2"></i>User de système</a><hr>
-                <a href="{{route('singin')}}" class="dnx nav-link"><i class="fa fa-power-off me-2" style="background-color: rgb(218, 0, 0)"></i>Déconnexion</a>
+                <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="dnx nav-link btn btn-link p-0" style="text-decoration:none;">
+                        <i class="fa fa-power-off me-2" style="background-color: rgb(218, 0, 0)"></i>Déconnexion
+                    </button>
+                </form>
             </div> 
         </nav>
     </div>

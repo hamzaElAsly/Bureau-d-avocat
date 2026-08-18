@@ -51,19 +51,37 @@
                 <div style="float: left" class="col-6 col-sm-4 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <h3 class="d-flex align-items-center ms-3 mb-3">Connexion</h3>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('login.store') }}">
+                        @csrf
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="nom@example.com">
+                            <input type="email" class="form-control" id="floatingInput" name="email" value="{{ old('email') }}" placeholder="nom@example.com" required autofocus>
                             <label for="floatingInput">Email</label>
+                            @error('email') <div class="text-danger small">{{ $message }}</div> @enderror
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="mot de pass">
-                            <label for="floatingPassword">Mot de pass</label>
+                            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="mot de passe" required>
+                            <label for="floatingPassword">Mot de passe</label>
+                            @error('password') <div class="text-danger small">{{ $message }}</div> @enderror
                         </div>
                         <div class="d-flex align-items-center justify-content-between ms-3 mb-4">
-                            <a href="">Mot de passe oublié</a>
+                            @if (app('router')->has('password.request'))
+                                <a href="{{ route('password.request') }}">Mot de passe oublié</a>
+                            @else
+                                <span class="text-muted small">Mot de passe oublié (bientôt)</span>
+                            @endif
                         </div>
                         <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Connecter</button>
-                        <p class="text-center mb-0">Je n'ai pas de compte? <a href="{{route('signup')}}">Register</a></p>
+                    </form>
+                    <p class="text-center mb-0">Je n'ai pas de compte? <a href="{{ route('signup') }}">Register</a></p>
                     </div>
                 </div>
             </div>

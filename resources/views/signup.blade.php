@@ -51,28 +51,49 @@
                 <div style="float: left" class="col-6 col-sm-4 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
                         <h3 class="d-flex align-items-center justify-content-between ms-3 mb-3">Register</h3>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingText" placeholder="nom">
-                            <label for="floatingText">Nom</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="prénom">
-                            <label for="floatingInput">Prénom</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="+212">
-                            <label for="floatingInput">Téléphone</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="nom@example.com">
-                            <label for="floatingInput">Email</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="mot de pass">
-                            <label for="floatingPassword">Mot de pass</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Register</button>
-                        <p class="text-center mb-0">Déjà Contient un compte ? <a href="{{route('singin')}}">Connenxion</a></p>
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('register.store') }}">
+                            @csrf
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingNom" name="nom" value="{{ old('nom') }}" placeholder="nom" required>
+                                <label for="floatingNom">Nom</label>
+                                @error('nom') <div class="text-danger small">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingPrenon" name="prenon" value="{{ old('prenon') }}" placeholder="prénom" required>
+                                <label for="floatingPrenon">Prénom</label>
+                                @error('prenon') <div class="text-danger small">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="tel" class="form-control" id="floatingTel" name="tel" value="{{ old('tel') }}" placeholder="0612345678" required>
+                                <label for="floatingTel">Téléphone</label>
+                                @error('tel') <div class="text-danger small">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingInput" name="email" value="{{ old('email') }}" placeholder="nom@example.com" required>
+                                <label for="floatingInput">Email</label>
+                                @error('email') <div class="text-danger small">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="mot de passe" required>
+                                <label for="floatingPassword">Mot de passe</label>
+                                @error('password') <div class="text-danger small">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingPasswordConfirmation" name="password_confirmation" placeholder="confirmer le mot de passe" required>
+                                <label for="floatingPasswordConfirmation">Confirmer le mot de passe</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Register</button>
+                        </form>
+                        <p class="text-center mb-0">Déjà un compte ? <a href="{{ route('singin') }}">Connexion</a></p>
                     </div>
                 </div>
             </div>

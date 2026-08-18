@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Middleware\EnsureCurrentStoreContext;
-use App\Http\Middleware\EnsureStoreAccess;
 use App\Http\Middleware\EnsureUserIsActive;
 use App\Support\AuthRedirect;
 use Illuminate\Foundation\Application;
@@ -29,9 +27,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class,
-            'store.access' => EnsureStoreAccess::class,
-            'store.selected' => EnsureCurrentStoreContext::class,
-            'store.context' => EnsureCurrentStoreContext::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
