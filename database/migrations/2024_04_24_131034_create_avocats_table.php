@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('emailAvocat');
             $table->string('passAvocat');
             $table->string('specialiste');
+            $table->string('imageAvocat')->nullable();
             $table->timestamps();
         });
     }

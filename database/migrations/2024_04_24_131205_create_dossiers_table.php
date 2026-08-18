@@ -11,14 +11,20 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::create('dossiers', function (Blueprint $table) {
-            $table->unsignedBigInteger('idDossier')->primary();
+            $table->unsignedBigInteger('idDossier')->autoIncrement();
+            $table->string('numero_dossier')->nullable()->unique();
             $table->string('nomDossier');
-            $table->foreignId('idAv')->references('idAvocat')->on('avocats')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('titre')->nullable();
+            $table->foreignId('idAv')->references('idAvocat')->on('avocats')->cascadeOnDelete()->cascadeOnUpdate()->nullable();
             $table->foreignId('idCl')->references('idClient')->on('clients')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('idCa')->references('idCas')->on('cas')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('idCa')->references('idCas')->on('cas')->cascadeOnDelete()->cascadeOnUpdate()->nullable();
+            $table->foreignId('assigned_user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->date('dateDossier');
+            $table->date('date_fermeture')->nullable();
             $table->enum('etat', ['en cours', 'close']);
-            $table->string('description');
+            $table->string('statut')->default('nouveau');
+            $table->string('priorite')->default('normale');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

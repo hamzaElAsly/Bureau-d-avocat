@@ -16,10 +16,15 @@ return new class extends Migration
             $table->bigIncrements('idClient');
             $table->string('nomClient');
             $table->string('prenomClient');
+            $table->string('type_client')->default('particulier');
             $table->string('emailClient');
+            $table->string('identifiant', 100)->nullable();
             $table->string('adressClient');
-            $table->integer('tel1');
-            $table->integer('tel2');
+            $table->text('notes')->nullable();
+            $table->string('statut')->default('actif');
+            $table->integer('tel1')->nullable();
+            $table->integer('tel2')->nullable();
+            $table->string('imageClient')->nullable();
             $table->timestamps();
         });
     }
