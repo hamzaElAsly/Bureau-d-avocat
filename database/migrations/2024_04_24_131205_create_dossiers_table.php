@@ -15,9 +15,9 @@ return new class extends Migration
             $table->string('numero_dossier')->nullable()->unique();
             $table->string('nomDossier');
             $table->string('titre')->nullable();
-            $table->foreignId('idAv')->references('idAvocat')->on('avocats')->cascadeOnDelete()->cascadeOnUpdate()->nullable();
+            $table->foreignId('idAv')->nullable()->references('idAvocat')->on('avocats')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('idCl')->references('idClient')->on('clients')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('idCa')->references('idCas')->on('cas')->cascadeOnDelete()->cascadeOnUpdate()->nullable();
+            $table->foreignId('idCa')->nullable()->references('idCas')->on('cas')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('assigned_user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->date('dateDossier');
             $table->date('date_fermeture')->nullable();

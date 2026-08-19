@@ -36,7 +36,7 @@
                 <select name="responsable" class="form-select">
                     <option value="">Tous les responsables</option>
                     @foreach ($users as $user)
-                        <option value="{{ $user->id }}" @selected((string) request('responsable') === (string) $user->id)>{{ $user->name }}</option>
+                        <option value="{{ $user->id }}" @selected((string) request('responsable') === (string) $user->id)>{{ trim($user->nom.' '.$user->prenon) ?: $user->email }}</option>
                     @endforeach
                 </select>
             </div>

@@ -31,7 +31,9 @@ class AuthenticationTest extends TestCase
     public function test_guest_can_register_and_is_authenticated(): void
     {
         $response = $this->post(route('register.store'), [
-            'name' => 'Nouvel Avocat',
+            'nom' => 'Nouvel',
+            'prenon' => 'Avocat',
+            'tel' => 612345678,
             'email' => 'nouvel.avocat@example.test',
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -39,7 +41,9 @@ class AuthenticationTest extends TestCase
 
         $response->assertRedirect('/');
         $this->assertDatabaseHas('users', [
-            'name' => 'Nouvel Avocat',
+            'nom' => 'Nouvel',
+            'prenon' => 'Avocat',
+            'tel' => 612345678,
             'email' => 'nouvel.avocat@example.test',
         ]);
         $this->assertTrue(Hash::check('password123', User::where('email', 'nouvel.avocat@example.test')->value('password')));
@@ -51,7 +55,9 @@ class AuthenticationTest extends TestCase
         $this->get('/Register')->assertRedirect('/register');
 
         $this->post('/Register', [
-            'name' => 'Avocat Historique',
+            'nom' => ' Historique',
+            'prenon' => 'Avocat Historique',
+            'tel' => 612345678,
             'email' => 'historique@example.test',
             'password' => 'password123',
             'password_confirmation' => 'password123',
@@ -66,11 +72,11 @@ class AuthenticationTest extends TestCase
         User::factory()->create(['email' => 'existing@example.test']);
 
         $this->from(route('register'))->post(route('register.store'), [
-            'name' => '',
+            'nom' => '',
             'email' => 'existing@example.test',
             'password' => 'password123',
             'password_confirmation' => 'different-password',
-        ])->assertSessionHasErrors(['name', 'email', 'password']);
+        ])->assertSessionHasErrors(['nom', 'email', 'password']);
 
         $this->assertDatabaseCount('users', 1);
     }

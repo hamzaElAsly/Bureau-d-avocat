@@ -94,7 +94,7 @@
                 <div class="card-header bg-light"><h5 class="mb-0">Utilisateur responsable</h5></div>
                 <div class="card-body">
                     @if ($dossier->assignedUser)
-                        <p><strong>{{ $dossier->assignedUser->name }}</strong></p>
+                        <p><strong>{{ trim($dossier->assignedUser->nom.' '.$dossier->assignedUser->prenon) ?: $dossier->assignedUser->email }}</strong></p>
                         <p class="text-muted">{{ $dossier->assignedUser->email }}</p>
                     @else
                         <p class="text-muted">Aucun utilisateur assigné.</p>

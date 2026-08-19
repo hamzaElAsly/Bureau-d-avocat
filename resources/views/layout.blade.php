@@ -48,7 +48,12 @@
                 
                 <span class="nav-link">ACCESSIORES</span>
                 <a href="{{route('addUse')}}" class="nav-item nav-link"><i class="fa fa-user me-2"></i>User de système</a><hr>
-                <a href="{{route('singin')}}" class="dnx nav-link"><i class="fa fa-power-off me-2" style="background-color: rgb(218, 0, 0)"></i>Déconnexion</a>
+                <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="dnx nav-link btn btn-link p-0" style="text-decoration:none;">
+                        <i class="fa fa-power-off me-2" style="background-color: rgb(218, 0, 0)"></i>Déconnexion
+                    </button>
+                </form>
             </div> 
         </nav>
     </div>
@@ -70,7 +75,7 @@
                         <img class="rounded-circle" src="{{asset('img/user.jpg')}}" alt="profil" style="width: 40px; height: 40px;">
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-2">{{ auth()->user()->name }}</h6>
+                        <h6 class="mb-2">{{ trim((auth()->user()->nom ?? '').' '.(auth()->user()->prenon ?? '')) ?: auth()->user()->email }}</h6>
                     </div>
                 </div>
                     <a href="{{route('profil')}}"><button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-id-badge me-2"></i>Mon profile</button></a>

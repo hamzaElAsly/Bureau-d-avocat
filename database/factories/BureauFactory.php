@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Avocat;
+use App\Models\Client;
+use App\Models\Dossier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +18,9 @@ class BureauFactory extends Factory
             'idBureau' => $this->faker->unique()->randomNumber(7),
             'nomBureau' => $this->faker->company(),
             'adresseBureau' => $this->faker->address(),
+            'idAv' => Avocat::factory(),
+            'idCL' => Client::factory(),
+            'idDoss' => Dossier::factory(),
         ];
     }
 }

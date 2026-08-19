@@ -18,8 +18,8 @@ class StoreClientRequest extends FormRequest
         return [
             'prenom' => ['required', 'string', 'max:150'],
             'nom' => ['required', 'string', 'max:150'],
-            't1' => ['required', 'string', 'max:30'],
-            't2' => ['nullable', 'string', 'max:30'],
+            't1' => ['required', 'numeric'],
+            't2' => ['nullable', 'numeric'],
             'adrs' => ['required', 'string', 'max:255'],
             'mail' => ['required', 'email', 'max:150'],
             'photo' => ['nullable', 'image', 'max:2048'],

@@ -15,10 +15,11 @@ class AvocatFactory extends Factory
             'idAvocat' => $this->faker->unique()->randomNumber(7),
             'nomAvocat' => $this->faker->lastName(),
             'prenomAvocat' => $this->faker->firstName(),
-            'telAvocat' => $this->faker->numerify('06########'),
+            'telAvocat' => $this->faker->numberBetween(600000000, 799999999),
             'emailAvocat' => $this->faker->unique()->safeEmail(),
             'passAvocat' => $this->faker->password(),
             'specialiste' => $this->faker->word(),
+            'imageAvocat' => null,
         ];
     }
 }

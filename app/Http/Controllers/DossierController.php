@@ -26,10 +26,11 @@ class DossierController extends Controller
                       $cq->where('nomClient', 'like', "%{$search}%")
                         ->orWhere('prenomClient', 'like', "%{$search}%");
                   })
-                  ->orWhereHas('assignedUser', function ($uq) use ($search) {
-                      $uq->where('name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%");
-                  });
+                    ->orWhereHas('assignedUser', function ($uq) use ($search) {
+                        $uq->where('nom', 'like', "%{$search}%")
+                            ->orWhere('prenon', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -51,7 +52,7 @@ class DossierController extends Controller
             'dossiers' => $dossiers,
             'statuts' => Dossier::STATUTS,
             'priorites' => Dossier::PRIORITES,
-            'users' => User::orderBy('name')->get(),
+            'users' => User::orderBy('nom')->orderBy('prenon')->get(),
         ]);
     }
 
@@ -60,7 +61,7 @@ class DossierController extends Controller
         return view('dossiers.create', [
             'clients' => Client::orderBy('nomClient')->get(),
             'avocats' => Avocat::orderBy('nomAvocat')->get(),
-            'users' => User::orderBy('name')->get(),
+            'users' => User::orderBy('nom')->orderBy('prenon')->get(),
             'cas' => Cas::orderBy('listeCas')->get(),
             'statuts' => Dossier::STATUTS,
             'priorites' => Dossier::PRIORITES,
@@ -89,7 +90,7 @@ class DossierController extends Controller
             'dossier' => $dossier,
             'clients' => Client::orderBy('nomClient')->get(),
             'avocats' => Avocat::orderBy('nomAvocat')->get(),
-            'users' => User::orderBy('name')->get(),
+            'users' => User::orderBy('nom')->orderBy('prenon')->get(),
             'cas' => Cas::orderBy('listeCas')->get(),
             'statuts' => Dossier::STATUTS,
             'priorites' => Dossier::PRIORITES,
@@ -99,9 +100,12 @@ class DossierController extends Controller
     public function update(UpdateDossierRequest $request, string $id)
     {
         $dossier = Dossier::findOrFail($id);
-        $dossier->update($this->mapInputs($request));
-
-        return redirect()->route('dossiers.show', $dossier->idDossier)
+        $inputs = $this->mapInputs($request);
+        if (! $request->filled('idAv')) { unset($inputs['idAv']); }
+        if (! $request->filled('idCa')) { unset($inputs['idCa']); }
+        $dossier->update($inputs);
+        return redirect()
+            ->route('dossiers.show', $dossier->idDossier)
             ->with('success', 'Dossier modifié avec succès.');
     }
 

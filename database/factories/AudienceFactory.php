@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Dossier;
+use App\Models\Tribunal;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -13,6 +15,8 @@ class AudienceFactory extends Factory
     {
         return [
             'idAudience' => $this->faker->unique()->randomNumber(7),
+            'id_Dossier' => Dossier::factory(),
+            'id_Tribunal' => Tribunal::factory(),
             'dateAudience' => $this->faker->date(),
         ];
     }

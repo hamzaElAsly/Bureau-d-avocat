@@ -58,7 +58,7 @@
                     <select name="assigned_user_id" class="form-select">
                         <option value="">Aucun</option>
                         @foreach ($users as $u)
-                            <option value="{{ $u->id }}" @selected(old('assigned_user_id') == $u->id)>{{ $u->name }}</option>
+                            <option value="{{ $u->id }}" @selected(old('assigned_user_id') == $u->id)>{{ trim($u->nom.' '.$u->prenon) ?: $u->email }}</option>
                         @endforeach
                     </select>
                 </div>

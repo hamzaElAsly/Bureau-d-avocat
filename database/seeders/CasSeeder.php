@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Cas;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CasSeeder extends Seeder
@@ -13,6 +12,17 @@ class CasSeeder extends Seeder
      */
     public function run(): void
     {
-        Cas::factory()->count(10)->create();
+        $cases = [
+            ['idCas' => 2001, 'listeCas' => 'Commercial'],
+            ['idCas' => 2002, 'listeCas' => 'Familial'],
+            ['idCas' => 2003, 'listeCas' => 'Immobilier'],
+            ['idCas' => 2004, 'listeCas' => 'Pénal'],
+            ['idCas' => 2005, 'listeCas' => 'Administratif'],
+            ['idCas' => 2006, 'listeCas' => 'Social'],
+        ];
+
+        foreach ($cases as $case) {
+            Cas::updateOrCreate(['idCas' => $case['idCas']], $case);
+        }
     }
 }

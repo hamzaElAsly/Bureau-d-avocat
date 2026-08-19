@@ -19,11 +19,13 @@ class ClientFactory extends Factory
         return [
             'nomClient' => $this->faker->lastName(),
             'prenomClient' => $this->faker->firstName(),
-            'tel1' => $this->faker->numerify('06########'),
-            'tel2' => $this->faker->numerify('06########'),
+            'tel1' => $this->faker->numberBetween(600000000, 799999999),
+            'tel2' => $this->faker->optional()->numberBetween(600000000, 799999999),
             'emailClient' => $this->faker->unique()->safeEmail(),
             'adressClient' => $this->faker->address(),
             'imageClient' => null,
+            'type_client' => $this->faker->randomElement(['particulier', 'entreprise']),
+            'statut' => $this->faker->randomElement(['actif', 'inactif']),
         ];
     }
 }
